@@ -78,10 +78,14 @@ public class Player {
             System.out.println("----------------------------------------------------------");
             System.out.println("Zones: ");
             System.out.println("1 Safe House" +
-                    "\n2 Tool Store");
+                    "\n2 Tool Store" +
+                    "\n0 Exit");
             System.out.println("Please select the zone id you want to go to.");
             int selectLocation = input.nextInt();
             switch (selectLocation){
+                case 0:
+                    location = null;
+                    break;
                 case 1:
                     location = new SafeHouse(this);
                     break;
@@ -90,6 +94,10 @@ public class Player {
                     break;
                 default:
                     location = new SafeHouse(this);
+            }
+            if(location == null){
+                System.out.println("See you again.");
+                break;
             }
             if(!location.onLocation()){
                 System.out.println("Game Over!");
@@ -100,6 +108,8 @@ public class Player {
 
     public void printInfo(){
         System.out.println("Gun: " + this.getInventory().getGun().getGunName() +
+                ", Armor: " + this.getInventory().getArmor().getName() +
+                ", Block: " + this.getInventory().getArmor().getBlock() +
                 ", Damage: " + this.getDamage() +
                 ", Health: " + this.getHealth() +
                 ", Money: " + this.getMoney()
