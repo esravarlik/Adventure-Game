@@ -101,7 +101,7 @@ public class ToolStore extends NormalLocation{
         }
 
         if(selectArmorId != 0){
-            Armor selectedArmor = Armor.getGunObjById(selectArmorId);
+            Armor selectedArmor = Armor.getArmorObjById(selectArmorId);
 
             if (selectedArmor != null) {
                 if (selectedArmor.getPrice() > this.getPlayer().getMoney()) {

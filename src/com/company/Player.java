@@ -4,9 +4,7 @@ import com.company.characters.ArcherCharacter;
 import com.company.characters.GameCharacter;
 import com.company.characters.KnightCharacter;
 import com.company.characters.SamuraiCharacter;
-import com.company.locations.Location;
-import com.company.locations.SafeHouse;
-import com.company.locations.ToolStore;
+import com.company.locations.*;
 
 import java.util.Scanner;
 
@@ -15,6 +13,7 @@ public class Player {
     private String characterName;
     private int damage;
     private int health;
+    private int originalHealth;
     private int money;
     private Inventory inventory;
 
@@ -22,7 +21,7 @@ public class Player {
 
     public Player(String name){
         this.name = name;
-        this.setInventory(new Inventory());
+        this.inventory = new Inventory();
     }
 
     public void selectCharacter(){
@@ -32,7 +31,7 @@ public class Player {
                 new KnightCharacter(),
         };
 
-        System.out.println("----------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------");
         for(GameCharacter gameCharacter: characterList){
             System.out.println("Character: "+ gameCharacter.getCharacterName() +
                     "\tId: " + gameCharacter.getId() +
@@ -41,7 +40,7 @@ public class Player {
                     "\tMoney: " + gameCharacter.getMoney()
             );
         }
-        System.out.println("----------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------");
 
         System.out.println("Please enter a character id: ");
         int selectCharacter = input.nextInt();
@@ -56,7 +55,7 @@ public class Player {
                 initPlayer(new KnightCharacter());
                 break;
             default:
-                System.out.println("Enter a valid id.");
+                initPlayer(new SamuraiCharacter());
                 break;
         }
         System.out.println("Character: " + this.getCharacterName() +
@@ -69,17 +68,27 @@ public class Player {
         this.setCharacterName(gameCharacter.getCharacterName());
         this.setDamage(gameCharacter.getDamage());
         this.setHealth(gameCharacter.getHealth());
+        this.setOriginalHealth(gameCharacter.getHealth());
         this.setMoney(gameCharacter.getMoney());
     }
 
     public void selectLocation(){
         Location location = null;
         while(true){
-            System.out.println("----------------------------------------------------------");
+            if (isWin(this)) {
+                System.out.println("<3 You won the game <3");
+                break;
+            }
+            System.out.println("-------------------------------------------------------------");
             System.out.println("Zones: ");
             System.out.println("1 Safe House" +
                     "\n2 Tool Store" +
-                    "\n0 Exit");
+                    "\n3 Cave" +
+                    "\n4 Forest" +
+                    "\n5 River" +
+                    "\n6 Mine" +
+                    "\n0 Exit"
+            );
             System.out.println("Please select the zone id you want to go to.");
             int selectLocation = input.nextInt();
             switch (selectLocation){
@@ -92,8 +101,21 @@ public class Player {
                 case 2:
                     location = new ToolStore(this);
                     break;
+                case 3:
+                    location = new Cave(this);
+                    break;
+                case 4:
+                    location = new Forest(this);
+                    break;
+                case 5:
+                    location = new River(this);
+                    break;
+                case 6:
+                    location = new Mine(this);
+                    break;
                 default:
-                    location = new SafeHouse(this);
+                    System.out.println("Please enter a valid region.");
+                    break;
             }
             if(location == null){
                 System.out.println("See you again.");
@@ -106,11 +128,16 @@ public class Player {
         }
     }
 
+    public boolean isWin(Player player) {
+        return getInventory().isWater() && getInventory().isFood() && getInventory().isFirewood();
+
+    }
+
     public void printInfo(){
         System.out.println("Gun: " + this.getInventory().getGun().getGunName() +
                 ", Armor: " + this.getInventory().getArmor().getName() +
                 ", Block: " + this.getInventory().getArmor().getBlock() +
-                ", Damage: " + this.getDamage() +
+                ", Damage: " + this.getTotalDamage() +
                 ", Health: " + this.getHealth() +
                 ", Money: " + this.getMoney()
                 );
@@ -132,8 +159,11 @@ public class Player {
         this.characterName = characterName;
     }
 
-    public int getDamage() {
+    public int getTotalDamage(){
         return damage + this.getInventory().getGun().getDamage();
+    }
+    public int getDamage() {
+        return damage;
     }
 
     public void setDamage(int damage) {
@@ -156,12 +186,19 @@ public class Player {
         this.money = money;
     }
 
-
     public Inventory getInventory() {
         return inventory;
     }
 
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
+    }
+
+    public int getOriginalHealth() {
+        return originalHealth;
+    }
+
+    public void setOriginalHealth(int originalHealth) {
+        this.originalHealth = originalHealth;
     }
 }
