@@ -1,18 +1,28 @@
 # AdventureGame!
 
 A text-based adventure game.
-# Class Diagram
+### Class Diagram;
 
 [ADVENTUREGAME](https://user-images.githubusercontent.com/40757395/166145371-091a8205-d903-45f1-a9e0-94868d860459.png)
 
-# Charcters
-![Characters](https://user-images.githubusercontent.com/40757395/166145454-725b4c47-617d-44d9-8210-8e8eb6b8d6c6.png)
+### Charcters;
 
-# Monsters
-![Monster](https://user-images.githubusercontent.com/40757395/166145458-3bbb8d8d-733d-4890-80f1-b6b9ef63494d.png)
+| Character | Id | Damage  | Health  | Money  |
+|:---------:|:--:|:-------:|:-------:|:------:|
+| Samurai   | 1  | 5       | 21      | 15     |
+| Archer    | 2  | 7       | 18      | 20     |
+| Knight    | 3  | 8       | 24      | 5      |
 
+### Monsters;
 
-# Places:
+| Monster | Id | Damage  | Health  | Money  |
+|:-------:|:--:|:-------:|:-------:|:------:|
+| Zombie  | 1  | 3       | 10      | 4      |
+| Vampire | 2  | 4       | 14      | 7      |
+| Bear    | 3  | 7       | 20      | 12     |
+| Snake   | 4  | Random  | 12      | 0      |
+
+### Places;
 - Safe House
   - Feature: Regenerating Health
 - Cave
